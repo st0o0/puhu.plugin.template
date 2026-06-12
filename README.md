@@ -1,0 +1,1 @@
+# puhu.plugin.template
