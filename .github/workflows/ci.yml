@@ -33,3 +33,6 @@ jobs:
 
       - name: Build
         run: dotnet build --configuration Release --no-restore src/Puhu.Plugin.MyPlugin/Puhu.Plugin.MyPlugin.csproj
+
+      - name: Test
+        run: dotnet test --project src/Puhu.Plugin.MyPlugin.Tests/Puhu.Plugin.MyPlugin.Tests.csproj --configuration Release
