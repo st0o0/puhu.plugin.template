@@ -1,0 +1,12 @@
+<Project>
+  <PropertyGroup>
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+    <!-- Allow the floating Puhu.Plugin version until it is pinned post-publish -->
+    <CentralPackageFloatingVersionsEnabled>true</CentralPackageFloatingVersionsEnabled>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Set the version once Puhu.Plugin is published on NuGet -->
+    <PackageVersion Include="Puhu.Plugin" Version="*" />
+  </ItemGroup>
+</Project>

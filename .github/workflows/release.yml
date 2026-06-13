@@ -40,14 +40,14 @@ jobs:
           dotnet-version: "10.0.x"
 
       - name: Restore
-        run: dotnet restore src/Puhu.Plugin.MyPlugin.csproj
+        run: dotnet restore src/Puhu.Plugin.MyPlugin/Puhu.Plugin.MyPlugin.csproj
 
       - name: Build
         run: >
           dotnet build
           --configuration Release
           --no-restore
-          src/Puhu.Plugin.MyPlugin.csproj
+          src/Puhu.Plugin.MyPlugin/Puhu.Plugin.MyPlugin.csproj
           /p:Version=${{ needs.release-please.outputs.version }}
 
       - name: Publish
@@ -56,7 +56,7 @@ jobs:
           --configuration Release
           --no-build
           --output ./publish
-          src/Puhu.Plugin.MyPlugin.csproj
+          src/Puhu.Plugin.MyPlugin/Puhu.Plugin.MyPlugin.csproj
 
       - name: Attach DLL to GitHub Release
         uses: softprops/action-gh-release@v3
