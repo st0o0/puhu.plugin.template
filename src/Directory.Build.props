@@ -8,8 +8,6 @@
   </PropertyGroup>
   <PropertyGroup Condition="$(MSBuildProjectName.EndsWith('.Tests'))">
     <IsTestProject>true</IsTestProject>
-  </PropertyGroup>
-  <ItemGroup Condition="$(MSBuildProjectName.EndsWith('.Tests'))">
     <Using Include="Xunit" />
-  </ItemGroup>
+  </PropertyGroup>
 </Project>
