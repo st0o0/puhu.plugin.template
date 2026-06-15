@@ -58,8 +58,30 @@ jobs:
           --output ./publish
           src/Puhu.Plugin.MyPlugin/Puhu.Plugin.MyPlugin.csproj
 
-      - name: Attach DLL to GitHub Release
+      - name: Detect delivery mode
+        id: delivery
+        run: |
+          BUNDLE=$(jq -r '.delivery.bundle // false' puhu-manifest.json)
+          ASSET=$(jq -r '.delivery.asset' puhu-manifest.json)
+          echo "bundle=$BUNDLE" >> "$GITHUB_OUTPUT"
+          echo "asset=$ASSET" >> "$GITHUB_OUTPUT"
+
+      - name: Create bundle ZIP
+        if: steps.delivery.outputs.bundle == 'true'
+        run: |
+          cd ./publish
+          zip -r "../${{ steps.delivery.outputs.asset }}" .
+
+      - name: Attach bundle to GitHub Release
+        if: steps.delivery.outputs.bundle == 'true'
         uses: softprops/action-gh-release@v3
         with:
           tag_name: ${{ needs.release-please.outputs.tag_name }}
-          files: ./publish/Puhu.Plugin.MyPlugin.dll
+          files: ${{ steps.delivery.outputs.asset }}
+
+      - name: Attach DLL to GitHub Release
+        if: steps.delivery.outputs.bundle != 'true'
+        uses: softprops/action-gh-release@v3
+        with:
+          tag_name: ${{ needs.release-please.outputs.tag_name }}
+          files: ./publish/${{ steps.delivery.outputs.asset }}
