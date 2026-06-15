@@ -51,3 +51,22 @@ dotnet build src/Puhu.Plugin.MyPlugin.slnx
 
 1. Create a GitHub Release with your built DLL as an asset
 2. Open a PR to [puhu.registry](https://github.com/st0o0/puhu.registry) adding your plugin entry to `index.json`
+
+### Bundle Delivery (for plugins with dependencies)
+
+If your plugin has external NuGet dependencies (e.g., LibGit2Sharp), the single DLL won't work — dependencies won't be found at runtime. Use **bundle delivery** instead:
+
+1. Build/publish your plugin: `dotnet publish -c Release`
+2. ZIP the entire publish output as `YourPlugin.zip`
+3. Update `puhu-manifest.json`:
+
+```json
+"delivery": {
+  "type": "github-release",
+  "asset": "YourPlugin.zip",
+  "bundle": true
+}
+```
+
+4. Upload the ZIP as the GitHub Release asset
+5. Puhu extracts the ZIP into the plugin directory on install
